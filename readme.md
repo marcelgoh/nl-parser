@@ -1,3 +1,3 @@
-# Miscellaneous Mini-Programs
+# Natural-Language Parser
 
-A collection of mostly single-file programs or scripts that I wrote while learning new languages.
+A program that parses English sentences.
