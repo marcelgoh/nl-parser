@@ -1,7 +1,9 @@
-import Data.Char
-import Dictionary
+module Parse where
 
--- parses a string into a list of words
+import Data.Char
+import Grammar
+
+-- Parses a string into a list of words
 breakStr :: String -> [String]
 breakStr = buildWordList [] []
   where
@@ -11,10 +13,10 @@ breakStr = buildWordList [] []
         c:cs -> if isSpace c
                    then buildWordList ((reverse word) : list) [] cs
                    else if isAlpha c
-                           then buildWordList list (c : word) cs
+                           then buildWordList list (toLower c : word) cs
                            else buildWordList list word cs
 
--- converts a list into a printable string
+-- Converts a list into a printable string
 listToStr :: [String] -> String
 listToStr = buildStr []
   where
@@ -29,7 +31,8 @@ listToStr = buildStr []
            []   -> '[' : (reverse $ ']' : (tail str))
            s:ss -> buildStr (' ' : (attachToFront s str)) ss
 
--- converts a dictionary to printable form
+-- Converts a dictionary to printable form
+-- * Primarily for debugging, inefficient! *
 dictToStr :: [(String, [String])] -> String
 dictToStr = buildStr []
   where
@@ -38,9 +41,18 @@ dictToStr = buildStr []
         []   -> str
         t:ts -> buildStr (str ++ (fst t) ++ ": " ++ (listToStr $ snd t) ++ "\n") ts
 
-main = do putStrLn "Enter a sentence: "
-          inputStr <- getLine
-          let wordList = breakStr inputStr
-          print $ show wordList
-          putStrLn $ listToStr wordList
-          putStrLn $ dictToStr Dictionary.dict
+-- Looks up a word in dictionary and returns part of speech
+-- If word is not found, returns "?"
+lookUp :: String -> String
+lookUp = searchDict Grammar.lexicon
+  where
+    searchDict dict str =
+      case dict of
+        []           -> "?"
+        (part, list):ps -> if str `elem` list
+                              then part
+                              else searchDict ps str
+
+labelParts :: [String] -> [String]
+labelParts = map lookUp
+
