@@ -34,6 +34,24 @@ ruleLHS r =
     NonTerm s _ _ -> s
     Term s _      -> s
 
+-- Given the RHS of a non-terminal rule, return all valid LHS
+validNonTerm :: [Rule] -> (String, String) -> [String]
+validNonTerm rules (b, c) =
+  let valid rhs =
+        case rhs of
+          (NonTerm _ x y) -> x == b && y == c
+          _               -> False
+  in map ruleLHS (filter valid rules)
+
+-- Given RHS of terminal rule, return all valid LHS
+validTerm :: [Rule] -> String -> [String]
+validTerm rules alpha =
+  let valid rhs =
+        case rhs of
+          (Term _ x) -> x == alpha
+          _          -> False
+  in map ruleLHS (filter valid rules)
+
 -- List of rules in the context-free grammar
 grammar :: [Rule]
 grammar = [NonTerm "TP" "NP" "VP",
@@ -48,6 +66,6 @@ grammar = [NonTerm "TP" "NP" "VP",
            Term "AdjP" "Adj",
            Term "AdvP" "Adv",
            NonTerm "PP" "P'" "NP",
-           -- special case: we do not allow a single preposition to be a PP
+           -- Special case: we do not allow a single preposition to be a PP
            Term "P'" "P",
            Term "DetP" "Det"]

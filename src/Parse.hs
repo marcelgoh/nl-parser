@@ -1,6 +1,9 @@
 module Parse where
 
+import Data.Array
 import Data.Char
+import Data.List
+
 import Grammar
 
 -- Parses a string into a list of words
@@ -56,3 +59,24 @@ lookUp = searchDict Grammar.lexicon
 labelParts :: [String] -> [String]
 labelParts = map lookUp
 
+-- An implementation of the CYK algorithm to determine if a list of terminals
+-- adheres to the grammar's rules.
+-- Based on this implementation: https://github.com/agorenst/cyk/blob/master/cyk.pdf
+cyk :: [Rule] -> [String] -> Bool
+cyk rules list =
+  let n = length list
+      matrix :: [Rule] -> [String] -> Array (Int, Int) [String]
+      matrix rs ss =
+        let terms = validTerm rules
+            nonTerms = validNonTerm rules
+            m = array ((0, 0), (n-1, n-1))
+                      ([((i, i), terms (ss!!i))     | i <- [0 .. n-1]] ++
+                       [((r, r+1), generators r l)  | l <- [1 .. n-1],
+                                                      r <- [0 .. n-l-1]])
+                         where generators :: Int -> Int -> [String]
+                               generators r l =
+                                 nub $ concat [nonTerms (b, c) | t <- [0 .. l-1],
+                                                                 b <- m!(r, r+t),
+                                                                 c <- m!(r+t+1, r+1)]
+        in m
+  in "TP" `elem` ((matrix rules list) ! (0, n-1))
