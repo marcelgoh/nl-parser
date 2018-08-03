@@ -1,6 +1,6 @@
 module Grammar where
 
--- All parts of speech recognised by the program.
+-- All parts of speech recognised by the program
 -- Terminals in the context-free grammar
 parts :: [String]
 parts = ["Det", "N", "V", "Adj", "Adv", "P"]
