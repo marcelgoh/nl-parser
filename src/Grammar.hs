@@ -3,7 +3,7 @@ module Grammar where
 -- All parts of speech recognised by the program
 -- Terminals in the context-free grammar
 parts :: [String]
-parts = ["Det", "N", "V", "Adj", "Adv", "P", "C"]
+parts = ["Det", "N", "V", "Adj", "Adv", "P", "C", "T"]
 
 -- A list of pairs where:
 -- The first element is a part of speech
@@ -12,19 +12,23 @@ lexicon :: [(String, [String])]
 lexicon = zip parts [-- list of Det
                      ["a", "the"],
                      -- list of N
-                     ["articles", "berkeley", "bicycle", "boy", "breweries", "collection", "cover",
-                      "dog", "fox", "girl", "ideas", "john", "jig", "leg", "man", "me", "room",
-                      "stick", "students", "syntax", "tucson", "thursday"],
+                     ["articles", "bicycle", "boy", "breweries", "cheese", "collection", "cover",
+                      "dog", "fox", "girl", "i", "ideas", "it",
+                      "jig", "leg", "man", "me", "mouse", "movies", "room",
+                      "stick", "students", "syntax", "thursday", "woman"],
                      -- list of V
-                     ["abound", "bores", "danced", "eat", "jumps", "hit", "hurts", "pleases", "said", "sleep"],
+                     ["abound", "bores", "danced", "eat", "find", "go",
+                     "jumps", "hit", "hurts", "pleases", "rains", "saddens", "said", "sleep"],
                      -- list of Adj
                      ["biggest", "brown", "colourless", "green", "lazy", "my", "quick", "red"],
                      -- list of Adv
-                     ["dangerously", "furiously", "greatly", "happily"],
+                     ["dangerously", "furiously", "greatly", "happily", "never"],
                      -- list of P
-                     ["in", "of", "on", "over", "with"],
+                     ["at", "in", "of", "on", "over", "to", "with"],
                      -- list of C
-                     ["that"]]
+                     ["if", "that"],
+                     -- list of T
+                     ["may", "should", "will"]]
 
 -- Represents context-free grammar. Chomsky normal form is not required.
 data Rule = Double String String String
@@ -58,9 +62,7 @@ validSingle rules alpha =
 -- List of rules in the context-free grammar
 -- Double rules are sorted into those governing complements, adjuncts, and specifiers
 termRules = [Single "NP" "N",
-             Single "VP" "V",
-             Single "AdjP" "Adj",
-             Single "AdvP" "Adv"]
+             Single "VP" "V"]
 
 compRules = [Double "PP" "P" "NP",
              Double "VP" "VP" "NP",
@@ -68,12 +70,13 @@ compRules = [Double "PP" "P" "NP",
              Double "CP" "C" "TP"]
 
 adjRules = [Double "VP" "VP" "PP",
-            Double "NP" "AdjP" "NP",
-            Double "VP" "AdvP" "VP",
-            Double "VP" "VP" "AdvP",
+            Double "NP" "Adj" "NP",
+            Double "VP" "Adv" "VP",
+            Double "VP" "VP" "Adv",
             Double "NP" "NP" "PP"]
 
 specRules = [Double "NP" "Det" "NP",
+             Double "VP" "T" "VP",
              Double "TP" "CP" "VP",
              Double "TP" "NP" "VP"]
 
