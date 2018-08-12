@@ -13,16 +13,16 @@ lexicon = zip parts [-- list of Det
                      ["a", "the"],
                      -- list of N
                      ["articles", "bicycle", "boy", "breweries", "cheese", "collection", "cover",
-                      "dog", "fox", "girl", "i", "ideas", "it",
-                      "jig", "leg", "man", "me", "mouse", "movies", "room",
-                      "stick", "students", "syntax", "thursday", "woman"],
+                      "dog", "fox", "girl", "he", "i", "ideas", "it", "jennifer",
+                      "jig", "leg", "man", "me", "mouse", "movies", "rhonda", "room", "she",
+                      "stick", "students", "syntax", "thursday", "we", "woman"],
                      -- list of V
-                     ["abound", "bores", "danced", "eat", "find", "go",
-                     "jumps", "hit", "hurts", "pleases", "rains", "saddens", "said", "sleep"],
+                     ["abound", "bores", "dance", "decided", "eat", "find", "go",
+                     "jumps", "hit", "hurts", "pleases", "rains", "saddens", "said", "see", "sleep"],
                      -- list of Adj
-                     ["biggest", "brown", "colourless", "green", "lazy", "my", "quick", "red"],
+                     ["biggest", "brown", "colourless", "green", "lazy", "my", "quick", "red", "slow"],
                      -- list of Adv
-                     ["dangerously", "furiously", "greatly", "happily", "never"],
+                     ["dangerously", "furiously", "greatly", "happily", "never", "only"],
                      -- list of P
                      ["at", "in", "of", "on", "over", "to", "with"],
                      -- list of C
@@ -39,7 +39,7 @@ ruleLHS :: Rule -> String
 ruleLHS r =
   case r of
     Double s _ _ -> s
-    Single s _      -> s
+    Single s _   -> s
 
 -- Given the RHS of a double rule, return all valid LHS
 validDouble :: [Rule] -> (String, String) -> [String]
