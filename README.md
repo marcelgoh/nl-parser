@@ -1,6 +1,6 @@
 # Natural-Language Parser
 
-A program that parses English sentences. To compile and run:
+A program that parses English sentences. To compile and run, enter the following lines into a terminal (requires that you have the Glasgow Haskell Compiler installed on your system):
 ```
     $ ghc -o bin/Main -outputdir obj -isrc --make src/Main.hs
     $ ./bin/Main
