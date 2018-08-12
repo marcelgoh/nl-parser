@@ -1,8 +1,6 @@
 module Parse where
 
-import Data.Array
 import Data.Char
-import Data.List
 
 import Grammar
 
