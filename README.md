@@ -14,8 +14,8 @@ The quick brown fox jumps over the lazy dog.
 [NP VP PP]
 [NP VP P NP]
 [Det NP VP P Det NP]
-[Det AdjP NP VP P Det NP]
-[Det AdjP AdjP NP VP P Det AdjP NP]
+[Det Adj NP VP P Det NP]
+[Det Adj Adj NP VP P Det Adj NP]
 [Det Adj Adj N V P Det Adj N]
 The quick brown fox jumps over the lazy dog.
 SENTENCE IS VALID.
@@ -23,16 +23,16 @@ SENTENCE IS VALID.
 A sentence is considered recognised by the grammar if it reduces to `[TP]`. For example, the following sentence is not recognised by the grammar:
 ```
 Enter a sentence:
-That the red dog jumps with the girl red.
-[CP AdjP]
-[C TP AdjP]
-[C NP VP AdjP]
-[C NP VP PP AdjP]
-[C NP VP P NP AdjP]
-[C Det NP VP P Det NP AdjP]
-[C Det AdjP NP VP P Det NP AdjP]
+That the green dog jumps with the girl red.
+[CP Adj]
+[C TP Adj]
+[C NP VP Adj]
+[C NP VP PP Adj]
+[C NP VP P NP Adj]
+[C Det NP VP P Det NP Adj]
+[C Det Adj NP VP P Det NP Adj]
 [C Det Adj N V P Det N Adj]
-That the red dog jumps with the girl red.
+That the green dog jumps with the girl red.
 SENTENCE IS NOT VALID.
 ```
 To add words to the lexicon or rules to the grammar, edit `/src/Grammar.hs`.
